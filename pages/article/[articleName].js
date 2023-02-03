@@ -26,7 +26,7 @@ export async function getStaticPaths() {
                     params: { articleName: x.link }
                 }
             }),
-            fallback: true,
+            fallback: "blocking",
         }
     }
 }
@@ -40,11 +40,9 @@ export async function getStaticProps(context) {
             }
         }
     }
-    else {
+    else{
         return {
-            props: {
-                Error: data.data.err
-            }
+            notFound: true
         }
     }
 }

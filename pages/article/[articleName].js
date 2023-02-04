@@ -37,7 +37,8 @@ export async function getStaticProps(context) {
         return {
             props: {
                 fetchedArticle1: data.data,
-            }
+            }, 
+            revalidate: 172800 ,
         }
     }
     else{

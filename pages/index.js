@@ -10,7 +10,7 @@ export default function Home({TopArticles, SlideArticles, Error, triggerReload1}
 }
 
 export async function getStaticProps(req, res){
-    let data = await axios.get("http://localhost:3000/api/fetchArticles")
+    let data = await axios.get("/api/fetchArticles")
     if(data.data.status === "success"){
         return{
             props: {

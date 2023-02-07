@@ -18,7 +18,7 @@ export default function articleName({ fetchedArticle1, Error, triggerReload1 }) 
 }
 
 export async function getStaticPaths() {
-    let data = await axios.get("/api/fetchArticles/getAllArticles")
+    let data = await axios.get("http://localhost:3000/api/fetchArticles/getAllArticles")
     if (data.data.status === "success") {
         return {
             paths: data.data.data.map((x) => {
@@ -32,7 +32,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-    let data = await axios.get(`/api/fetchArticles/article?articleName=${context.params.articleName}`)
+    let data = await axios.get(`http://localhost:3000/api/fetchArticles/article?articleName=${context.params.articleName}`)
     if (data.data.status === "success") {
         return {
             props: {

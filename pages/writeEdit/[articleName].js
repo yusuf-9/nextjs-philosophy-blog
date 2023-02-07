@@ -33,7 +33,7 @@ export async function getServerSideProps(context) {
           }
         }
         else {
-          const article = await axios.get(`/api/fetchArticles/oneArticle?articleName=${articleName}`, {withCredentials:true})
+          const article = await axios.get(`http://localhost:3000/api/fetchArticles/oneArticle?articleName=${articleName}`, {withCredentials:true})
           console.log(article)
           if (article.status === 200) {
             console.log("success block")

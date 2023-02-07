@@ -21,7 +21,8 @@ export async function getStaticProps(req, res) {
         return {
             props: {
                 fetchedArticles1: data.data,
-            }
+            }, 
+            revalidate: 172800
         }
     }
     else {

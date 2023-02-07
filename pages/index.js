@@ -16,7 +16,8 @@ export async function getStaticProps(req, res){
             props: {
                 TopArticles: data.data.data,
                 SlideArticles: data.data.x
-            }
+            },
+            revalidate: 172800
         }
     }
     else{

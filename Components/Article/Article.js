@@ -7,7 +7,8 @@ import Image from "next/image";
 
 
 
-function Article({ fetchedArticle1, Error, triggerReload1 }) {
+function ArticleComponent({ fetchedArticle1, triggerReload1 }) {
+    console.log(fetchedArticle1)
     // Defining states
     const router = useRouter()
     let { articleName } = router.query;
@@ -401,4 +402,4 @@ function Article({ fetchedArticle1, Error, triggerReload1 }) {
 
 
 
-export default Article;
+export default ArticleComponent;

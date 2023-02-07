@@ -87,4 +87,4 @@ const Article = new mongoose.Schema({
 
 })
 
-export default mongoose.models.Article || mongoose.model("Article", Article)
+export default mongoose.models?.Article || mongoose.model("Article", Article)

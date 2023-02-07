@@ -121,7 +121,6 @@ export async function fetchCommentsAndLikes(articleName, req, res) {
 
 export async function fetchOneArticleOnly(article, req, res) {
     try {
-        console.log("all clear")
         const main = await Article.findOne({ link: article }, { heading: 1, description: 1, first_half: 1, second_half: 1, category: 1, image: 1 })
         return res.status(200).json({ data: main })
     } catch (err) {

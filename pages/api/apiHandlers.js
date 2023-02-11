@@ -132,7 +132,24 @@ export async function fetchOneArticleOnly(article, req, res) {
 
 // Post article API handlers
 export async function writeArticle(req, res) {
-    const allCLear = await adminOnly(req, res)
+    let allCLear = null
+    let { cookies } = req;
+    let { token } = cookies
+    if (token) {
+        try {
+            const verified = await verify(token, process.env.JWT)
+            if (verified.role === "admin") {
+                allCLear = true
+            }
+            else {
+                return res.status(401).json({ message: "Unauthorized request" })
+            }
+        } catch (err) {
+            return res.status(401).json({ message: "Unauthorized request" })
+        }
+    } else {
+        return res.status(401).json({ message: "Unauthorized request" })
+    }
     if (allCLear) {
         let { heading, description, first_half, second_half, category, image } = req.body;
         try {
@@ -158,12 +175,28 @@ export async function writeArticle(req, res) {
 }
 
 export async function updateArticle(articleName, req, res) {
-    const allCLear = await adminOnly(req, res)
+    let allCLear = null
+    let { cookies } = req;
+    let { token } = cookies
+    if (token) {
+        try {
+            const verified = await verify(token, process.env.JWT)
+            if (verified.role === "admin") {
+                allCLear = true
+            }
+            else {
+                return res.status(401).json({ message: "Unauthorized request" })
+            }
+        } catch (err) {
+            return res.status(401).json({ message: "Unauthorized request" })
+        }
+    } else {
+        return res.status(401).json({ message: "Unauthorized request" })
+    }
     if (allCLear) {
         let { heading, description, first_half, second_half, category, image } = req.body;
         try {
             const article = await Article.findOne({ link: articleName });
-            console.log(article)
             article.heading = heading;
             article.description = description;
             article.image = image;
@@ -171,8 +204,9 @@ export async function updateArticle(articleName, req, res) {
             article.second_half = second_half;
             article.category = category;
             article.last_updated = Date.now();
+            article.link = heading.split(" ").join("_").replace("?", "")
             await article.save()
-            return res.status(204).json({ status: "success" })
+            return res.status(204).end()
         } catch (err) {
             if (err) {
                 return res.status(400).json({ status: "failed", data: err })
@@ -183,8 +217,25 @@ export async function updateArticle(articleName, req, res) {
 
 // Delete article API handler
 export async function deleteArticle(articleName, req, res) {
-    const allClear = await adminOnly(req, res)
-    if (allClear) {
+    let allCLear = null
+    let { cookies } = req;
+    let { token } = cookies
+    if (token) {
+        try {
+            const verified = await verify(token, process.env.JWT)
+            if (verified.role === "admin") {
+                allCLear = true
+            }
+            else {
+                return res.status(401).json({ message: "Unauthorized request" })
+            }
+        } catch (err) {
+            return res.status(401).json({ message: "Unauthorized request" })
+        }
+    } else {
+        return res.status(401).json({ message: "Unauthorized request" })
+    }
+    if (allCLear) {
         try {
             await Article.deleteOne({ link: articleName })
             return res.status(200).json({ status: "success" })
@@ -198,7 +249,19 @@ export async function deleteArticle(articleName, req, res) {
 
 // Comments and likes API handlers
 export async function likeHandler(req, res) {
-    const user = await usersOnly(req, res);
+    let user;
+    let { cookies } = req;
+    let { token } = cookies
+    if (token) {
+        try {
+            const user1 = await verify(token, process.env.JWT)
+            user = user1
+        } catch (err) {
+            return res.status(401).json({ data: "User not logged in" })
+        }
+    } else {
+        return res.status(401).json({ message: "User not logged in" })
+    }
     if (user) {
         const { articleName } = req.query;
         const { action } = req.body;
@@ -229,7 +292,19 @@ export async function likeHandler(req, res) {
 }
 
 export async function commentHandler(req, res) {
-    const user = await usersOnly(req, res);
+    let user;
+    let { cookies } = req;
+    let { token } = cookies
+    if (token) {
+        try {
+            const user1 = await verify(token, process.env.JWT)
+            user = user1
+        } catch (err) {
+            return res.status(401).json({ data: "User not logged in" })
+        }
+    } else {
+        return res.status(401).json({ message: "User not logged in" })
+    }
     if (user) {
         const { articleName } = req.query;
         const { comment, action } = req.body;
@@ -263,7 +338,19 @@ export async function commentHandler(req, res) {
 
 // Auth API handlers
 export async function registerUser(req, res) {
-    const allClear = await loggedOutOnly(req, res)
+    let allClear = null;
+    let { cookies } = req;
+    let { token } = cookies;
+    if (!token) {
+        allClear = true;
+    } else {
+        try {
+            const user = await verify(token, process.env.JWT)
+            return res.status(401).json({status: "user unauthenticated"})
+        } catch (err) {
+            allClear = true;
+        }
+    }
     if (allClear) {
         try {
             let { name, email, password } = req.body
@@ -304,7 +391,19 @@ export async function registerUser(req, res) {
 }
 
 export async function loginUser(req, response) {
-    const allClear = await loggedOutOnly(req, response)
+    let allClear = null;
+    let { cookies } = req;
+    let { token } = cookies
+    if (!token) {
+        allClear = true;
+    } else {
+        try {
+            const user = await verify(token, process.env.JWT)
+            return res.status(401).json({status: "user unauthenticated"})
+        } catch (err) {
+            allClear = true;
+        }
+    }
     if (allClear) {
         const { email, password } = req.body
         try {
@@ -343,7 +442,20 @@ export async function loginUser(req, response) {
 }
 
 export async function sendEmailVerification(req, res) {
-    const allClear = await loggedOutOnly(req, res)
+    let allClear = null;
+    let { cookies } = req;
+    let { token } = cookies
+    if (!token) {
+        allClear = true;
+    } else {
+        console.log("cookie block 2")
+        try {
+            const user = await verify(token, process.env.JWT)
+            return res.status(401).json({status: "user unauthenticated"})
+        } catch (err) {
+            allClear = true;
+        }
+    }
     if (allClear) {
         let { pageType, email } = req.query
         try {
@@ -384,6 +496,7 @@ export async function sendEmailVerification(req, res) {
     }
 }
 
+// Need to do verification on client side using useEffect
 export async function verifyUser(req, res) {
         let { id } = req.query;
         try {
@@ -398,7 +511,7 @@ export async function verifyUser(req, res) {
                 user.verified = true;
                 await user.save()
                 const token = sign({ name: user.name.split(" ")[0] + " " + user.name.split(" ")[1], role: user.role, email: user.email }, process.env.JWT)
-                let authCookie = serialize("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
+                let authCookie = serialize("token", token, { httpOnly: true, secure: true, sameSite: "strict", path: "/" });
                 res.setHeader("Set-Cookie", authCookie)
                 return res.redirect("/auth/verify/true")
             }
@@ -410,7 +523,19 @@ export async function verifyUser(req, res) {
 }
 
 export async function checkUserAction(req, res) {
-    const allClear = await loggedOutOnly(req, res)
+    let allClear = null;
+    let { cookies } = req;
+    let { token } = cookies
+    if (!token) {
+        allClear = true;
+    } else {
+        try {
+            const user = await verify(token, process.env.JWT)
+            res.json({ status: "error", data: err })
+        } catch (err) {
+            allClear = true;
+        }
+    }
     if (allClear) {
         const { uid } = req.body
         console.log(uid)
@@ -429,7 +554,19 @@ export async function checkUserAction(req, res) {
 }
 
 export async function resetPassword(req, res) {
-    const allClear = await loggedOutOnly(req, res)
+    let allClear = null;
+    let { cookies } = req;
+    let { token } = cookies
+    if (!token) {
+        allClear = true;
+    } else {
+        try {
+            const user = await verify(token, process.env.JWT)
+            return res.status(401).json({status: "user unauthenticated"})
+        } catch (err) {
+            allClear = true;
+        }
+    }
     if (allClear) {
         let { email, password } = req.body
         if (email && !password) {
@@ -585,8 +722,6 @@ export async function checkUserRole(req, res) {
 
 async function adminOnly(req, res) {
     let { cookies } = req;
-    console.log(req.cookies)
-    console.log(cookies)
     let { token } = cookies
     if (token) {
         try {

@@ -20,14 +20,12 @@ function ArticlesSection({ fetchedArticles1, triggerReload1 }) {
     // Useeffect
     useEffect(() => {
         if (!reloader) {
-            const data = axios.get(`http://localhost:3000/api/fetchArticles/articles?page=${pageNumber}&${Filter}`).then((x) => {
+            const data = axios.get(`/api/fetchArticles/articles?page=${pageNumber}&${Filter}`).then((x) => {
                 if (x.data.status === "success") {
                     setFetchedArticles({ data: x.data.data, page: x.data.page })
                     setRealoader(true)
                 }
                 else {
-                    setError("Something went wrong. Please come back later")
-                    console.log(x.data)
                 }
 
             })
@@ -44,7 +42,6 @@ function ArticlesSection({ fetchedArticles1, triggerReload1 }) {
             activeFilter.classList.add("active");
             activeFilter.children[0].classList.add("activated-img")
             activeFilter.children[1].classList.add("activated-span")
-            console.log(activeFilter.children)
             let activeFilters = Array.from(document.querySelectorAll(".topic-name")).filter((x) => { return x.classList.contains("active") })
             let innerText = activeFilters.map((x) => {
                 return x.children[1].innerText;

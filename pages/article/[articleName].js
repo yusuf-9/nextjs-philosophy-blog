@@ -25,7 +25,6 @@ export default function articleName({ fetchedArticle1, Error, triggerReload1 }) 
                 <meta name='description' content={description} />
             </Head>
             <ArticleComponent triggerReload1={triggerReload1} fetchedArticle1={JSON.parse(fetchedArticle1)} />
-            <>Hell world</>
         </>
     )
 }
@@ -45,17 +44,7 @@ export async function getStaticPaths() {
     } catch (error) {
         
     }
-    // let data = await axios.get("http://localhost:3000/api/fetchArticles/getAllArticles")
-    // if (data.data.status === "success") {
-    //     return {
-    //         paths: data.data.data.map((x) => {
-    //             return {
-    //                 params: { articleName: x.link }
-    //             }
-    //         }),
-    //         fallback: "blocking",
-    //     }
-    // }
+
 }
 
 export async function getStaticProps(context) {
@@ -84,18 +73,4 @@ export async function getStaticProps(context) {
               }
         }
     }
-    // let data = await axios.get(`http://localhost:3000/api/fetchArticles/article?articleName=${context.params.articleName}`)
-    // if (data.data.status === "success") {
-    //     return {
-    //         props: {
-    //             fetchedArticle1: data.data,
-    //         }, 
-    //         revalidate: 172800 ,
-    //     }
-    // }
-    // else{
-    //     return {
-    //         notFound: true
-    //     }
-    // }
 }

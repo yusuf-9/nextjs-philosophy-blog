@@ -77,18 +77,17 @@ export default function Register() {
     }
     if (validated === true) {
       document.querySelector(".lds-dual-ring").classList.remove("invisible")
-      axios.post("/api/auth/local/register", { name: name, email: email, password: password }).then((x) => {
+      axios.post("/api/auth/local/register", { name: name, email: email, password: password }, {withCredentials:true}).then((x) => {
         document.querySelector(".lds-dual-ring").classList.add("invisible")
         if (x.data.status === "success") {
           setRegisterProcess(true)
         }
         else if (x.data.status === "failed") {
           document.getElementById("error").innerText = x.data.data
-          console.log(x.data)
         }
         else {
           document.getElementById("error").innerText = "An error occurred. Please try again later"
-          console.log(x.data.data)
+
         }
       })
     }

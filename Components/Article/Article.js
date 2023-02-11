@@ -8,7 +8,6 @@ import Image from "next/image";
 
 
 function ArticleComponent({ fetchedArticle1, triggerReload1 }) {
-    console.log(fetchedArticle1)
     // Defining states
     const router = useRouter()
     let { articleName } = router.query;
@@ -22,7 +21,7 @@ function ArticleComponent({ fetchedArticle1, triggerReload1 }) {
     useEffect(() => {
         fetch("/api/middleware/checkUserRole").then((y) => {
             y.json().then((x) => {
-                console.log(x)
+
                 if (x.user) {
                     setUser(x.user)
                     if (x.role === "admin") {
@@ -31,15 +30,6 @@ function ArticleComponent({ fetchedArticle1, triggerReload1 }) {
                 }
             })
         })
-        // axios.get("/api/middleware/checkUserRole", { withCredentials: true }).then((x) => {
-        //     console.log(x.data)
-        //     if (x.data.user) {
-        //         setUser(x.data.user)
-        //         if (x.data.role === "admin") {
-        //             setAdmin(true)
-        //         }
-        //     }
-        // })
         axios.get(`/api/fetchArticles/commentsAndLikes?articleName=${articleName}`).then((x) => {
             if (x.data.liked) {
                 setLiked(true)
@@ -79,7 +69,6 @@ function ArticleComponent({ fetchedArticle1, triggerReload1 }) {
 
     function deleteArticle() {
         axios.delete(`/api/articleActions/${fetchedArticle.data.link}`, { withCredentials: true }).then((x) => {
-            console.log(x.data)
             router.push(`/articles`)
 
         })
@@ -128,7 +117,6 @@ function ArticleComponent({ fetchedArticle1, triggerReload1 }) {
         const textarea = document.getElementById("write-comment")
         if (textarea.value.trim().length > 0) {
             axios.post(`/api/articleActions/commentAndLike/comment?articleName=${articleName}`, { action: "post", comment: textarea.value }, { withCredentials: true }).then((x) => {
-                console.log(x.data)
                 if (x.status === 201) {
                     const commentDiv = document.createElement("div")
                     commentDiv.className = ("write-comment deletable-div")
@@ -198,7 +186,7 @@ function ArticleComponent({ fetchedArticle1, triggerReload1 }) {
     return (
         fetchedArticle ? (
             <>
-                <div className="article-container-2" onClick={() => { console.log(fetchedComments) }}>
+                <div className="article-container-2">
                     {admin ? (
                         <>
                             <Link href={`/writeEdit/${fetchedArticle.data.link}`} id="edit">

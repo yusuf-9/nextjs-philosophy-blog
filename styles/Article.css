@@ -143,6 +143,7 @@
 .write-a-comment {
     resize: inherit;
     width: 564px;
+    padding: 5px;
     height: 70px;
     background-color: white;
     font-family: var(--content-font) !important;

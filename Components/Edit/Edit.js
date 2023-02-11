@@ -36,7 +36,6 @@ export default function Edit() {
                     }
                     else {
                     document.querySelector(".lds-dual-ring").classList.add("invisible")
-                        console.log(x.data)
                         navigate(`/article/${article_name}`)
                     }
                 })
@@ -60,7 +59,6 @@ export default function Edit() {
         const categoryLogo = document.querySelector(".logo_display")
         categoryInput.addEventListener("change", (e) => {
             let category = e.target.value;
-            console.log(category)
             if (category == "religion") {
                 categoryLogo.style.backgroundImage = "url(/Logos/religion.jpg)"
             }

@@ -12,7 +12,6 @@ function Header({reloader1, triggerReload1}) {
     const [checked, setChecked] = useState()
 
     useEffect(() => {
-        console.log("use effect was fired")
         axios.get("/api/middleware/checkUserRole", {withCredentials: true}).then((x)=>{
             if (x.data.user) {
                 setUser(true)

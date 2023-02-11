@@ -5,7 +5,6 @@ import axios from 'axios'
 
 
 export default function RegisterProcess(props) {
-  console.log(props)
   const navigate = useNavigate()
   const [pageType, setPageType] = useState(null)
   const [error, setError] = useState()
@@ -19,7 +18,6 @@ export default function RegisterProcess(props) {
           setPageType("registerPage")
         }
         else {
-          console.log(x.data)
           setError(x.data.data)
         }
       })
@@ -44,7 +42,6 @@ export default function RegisterProcess(props) {
 
         }
         else {
-          console.log({ page: "verificationPage", text: "Something went wrong.." })
           setTimeout(() => {
             const refresher = props.refresher
             refresher()

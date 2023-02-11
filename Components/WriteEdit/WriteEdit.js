@@ -36,7 +36,6 @@ export default function WriteEdit({ write, article }) {
                         }
                         else {
                             document.querySelector(".lds-dual-ring").classList.add("invisible")
-                            console.log(x)
                         }
                     })
                 ])
@@ -48,7 +47,7 @@ export default function WriteEdit({ write, article }) {
             const upload = ref(storage, `images/${image.name}`)
             uploadBytes(upload, image).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => [
-                    axios.post(`/api/articleActions/${articleName}`, { category: category, heading: heading, description: description, first_half: firstHalf, second_half: secondHalf, image: url }, { withCredentials: true }).then((x) => {
+                    axios.post(`/api/articleActions/${articleName}`, { ...article, image: url }, { withCredentials: true }).then((x) => {
                         if (x.status == 204) {
                             document.querySelector(".lds-dual-ring").classList.add("invisible")
                             router.push("/articles")
@@ -58,7 +57,7 @@ export default function WriteEdit({ write, article }) {
                         }
                         else {
                             document.querySelector(".lds-dual-ring").classList.add("invisible")
-                            console.log(x)
+                            console.log(x.data)
                         }
                     })
                 ])

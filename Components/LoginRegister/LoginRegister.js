@@ -23,7 +23,7 @@ export default function LoginRegister({ passwordPage, triggerReload1 }) {
         // const refresher = props.refresher
         // refresher()
         // navigate("/")
-        console.log(x.data.data)
+
         triggerReload1()
         router.push("/")
       }
@@ -32,7 +32,7 @@ export default function LoginRegister({ passwordPage, triggerReload1 }) {
       }
       else {
         document.getElementById("error").innerText = x.data.data
-        console.log(x.data)
+
       }
     })
   }
@@ -49,7 +49,6 @@ export default function LoginRegister({ passwordPage, triggerReload1 }) {
       }
       else {
         document.querySelector(".lds-dual-ring").classList.add("invisible")
-        console.log(x.data)
         document.getElementById("error").innerText = x.data.data
       }
     })

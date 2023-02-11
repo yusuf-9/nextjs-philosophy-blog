@@ -15,7 +15,7 @@ export default function verify({ success, alreadyDone, triggerReload1 }) {
                 <title>Verify your email</title>
                 <meta name='description' content="Verify your email" />
             </Head>
-            success ? (
+            {success ? (
             <div className="contact-me-container">
                 <h2 id='message-2'>
                     Email verified successfully! You are logged in now.
@@ -39,7 +39,7 @@ export default function verify({ success, alreadyDone, triggerReload1 }) {
                     <Link href="/auth/login">Click here to go to the login page</Link>
                 </h2>
             </div>
-            )
+            )}
         </>
 
     )

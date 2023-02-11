@@ -34,16 +34,11 @@ export default function ResetPassword(props) {
             if (x.data.status === "success") {
                 setResetForm(true)
                 setLoading(false)
-                console.log(x.data)
             }
             else {
                 setError(true)
                 setLoading(false)
-                console.log(x.data)
-                // setMessage("User does not have permission to access this page. Redirecting to login page in 5 seconds.")
-                // setTimeout(() => {
-                //     navigate("/login")
-                // }, 5000)
+
             }
         })
         // }
@@ -62,7 +57,6 @@ export default function ResetPassword(props) {
             const uid = window.location.href.split("/")[window.location.href.split("/").length - 1]
             axios.post("/api/auth/local/resetPassword", { uid: uid, password: password }, { withCredentials: true }).then((x) => {
                 if (x.data.status === "success") {
-                    console.log(x.data)
                     document.querySelector(".lds-dual-ring").classList.add("invisible")
                     setResetForm(false)
                 }

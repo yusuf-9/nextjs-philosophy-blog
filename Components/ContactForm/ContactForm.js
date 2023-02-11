@@ -21,7 +21,6 @@ function ContactForm() {
             else if (x.data.status === "failed") {
                 document.querySelector(".lds-dual-ring").classList.add("invisible")
                 document.getElementById("error").innerText = x.data.data
-                console.log(x.data)
             }
         })
     }

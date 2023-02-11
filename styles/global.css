@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Tiro+Gurmukhi&display=swap');
 
 :root {
-    --content-font: 'Tiro Gurmukhi', serif;
+    --content-font: 'Tiro Gurmukhi', sans-serif;
 }
 
 #__next{

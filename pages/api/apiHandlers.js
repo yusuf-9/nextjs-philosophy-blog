@@ -473,7 +473,7 @@ export async function sendEmailVerification(req, res) {
                         to: user.email,
                         subject: "Email verification",
                         html: `<p>Click the following link to verify your account</p>
-                <p><a href="https://nextjs-philosophy-blog-fno7un5w4-yusuf-9.vercel.app/api/auth/local/verification/verify?id=${user._id}">Verify email</a></p>`
+                <p><a href="https://nextjs-philosophy-blog.vercel.app/api/auth/local/verification/verify?id=${user._id}">Verify email</a></p>`
                     })
                     return res.json({ status: "success" })
                 }
@@ -483,7 +483,7 @@ export async function sendEmailVerification(req, res) {
                         to: user.email,
                         subject: "Email verification",
                         html: `<p>Click the following link to verify your account</p>
-                <p><a href="https://nextjs-philosophy-blog-fno7un5w4-yusuf-9.vercel.app/api/auth/local/verification/verify?id=${user._id}">Verify email</a></p>`
+                <p><a href="https://nextjs-philosophy-blog.vercel.app/api/auth/local/verification/verify?id=${user._id}">Verify email</a></p>`
                     })
                     return res.json({ status: "successful verification", pageType: "login" })
                 }
@@ -591,7 +591,7 @@ export async function resetPassword(req, res) {
                         to: userExists.email,
                         subject: "Reset your password",
                         html: `<p>Click the following link to reset your password</p>
-                    <p><a href="https://nextjs-philosophy-blog-fno7un5w4-yusuf-9.vercel.app/auth/reset/${uid}">Reset password</a></p><p>The link will expire in 24 hours</p>`
+                    <p><a href="https://nextjs-philosophy-blog.vercel.app/auth/reset/${uid}">Reset password</a></p><p>The link will expire in 24 hours</p>`
                     })
                     return res.json({ status: "success", message: "Password reset link sent to email" })
                 }

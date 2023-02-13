@@ -680,7 +680,7 @@ export function logOut(req, res) {
         httpOnly: true, secure: true, sameSite: "strict", path: "/", maxAge: 0
     });
     res.setHeader('Set-Cookie', cookie);
-    res.status(200).json({ status: "success", message: "cookie cleared" })
+    return res.status(200).json({ status: "success", message: "cookie cleared" })
 }
 
 // Contact API handler

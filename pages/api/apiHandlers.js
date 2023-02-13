@@ -346,7 +346,7 @@ export async function registerUser(req, res) {
     } else {
         try {
             const user = await verify(token, process.env.JWT)
-            return res.status(401).json({status: "user unauthenticated"})
+            return res.status(401).json({ status: "user unauthenticated" })
         } catch (err) {
             allClear = true;
         }
@@ -399,7 +399,7 @@ export async function loginUser(req, response) {
     } else {
         try {
             const user = await verify(token, process.env.JWT)
-            return res.status(401).json({status: "user unauthenticated"})
+            return res.status(401).json({ status: "user unauthenticated" })
         } catch (err) {
             allClear = true;
         }
@@ -451,7 +451,7 @@ export async function sendEmailVerification(req, res) {
         console.log("cookie block 2")
         try {
             const user = await verify(token, process.env.JWT)
-            return res.status(401).json({status: "user unauthenticated"})
+            return res.status(401).json({ status: "user unauthenticated" })
         } catch (err) {
             allClear = true;
         }
@@ -498,27 +498,27 @@ export async function sendEmailVerification(req, res) {
 
 // Need to do verification on client side using useEffect
 export async function verifyUser(req, res) {
-        let { id } = req.query;
-        try {
-            const user = await User.findOne({ _id: id });
-            if (!user) {
-                return res.redirect("/auth/verify/false")
-            }
-            if (user.verified === true) {
-                return res.redirect("/auth/verify/alreadyDone")
-            }
-            else {
-                user.verified = true;
-                await user.save()
-                const token = sign({ name: user.name.split(" ")[0] + " " + user.name.split(" ")[1], role: user.role, email: user.email }, process.env.JWT)
-                let authCookie = serialize("token", token, { httpOnly: true, secure: true, sameSite: "strict", path: "/" });
-                res.setHeader("Set-Cookie", authCookie)
-                return res.redirect("/auth/verify/true")
-            }
-        } catch (err) {
-            if (err) {
-                return res.redirect("/auth/verify/false")
-            }
+    let { id } = req.query;
+    try {
+        const user = await User.findOne({ _id: id });
+        if (!user) {
+            return res.redirect("/auth/verify/false")
+        }
+        if (user.verified === true) {
+            return res.redirect("/auth/verify/alreadyDone")
+        }
+        else {
+            user.verified = true;
+            await user.save()
+            const token = sign({ name: user.name.split(" ")[0] + " " + user.name.split(" ")[1], role: user.role, email: user.email }, process.env.JWT)
+            let authCookie = serialize("token", token, { httpOnly: true, secure: true, sameSite: "strict", path: "/" });
+            res.setHeader("Set-Cookie", authCookie)
+            return res.redirect("/auth/verify/true")
+        }
+    } catch (err) {
+        if (err) {
+            return res.redirect("/auth/verify/false")
+        }
     }
 }
 
@@ -562,7 +562,7 @@ export async function resetPassword(req, res) {
     } else {
         try {
             const user = await verify(token, process.env.JWT)
-            return res.status(401).json({status: "user unauthenticated"})
+            return res.status(401).json({ status: "user unauthenticated" })
         } catch (err) {
             allClear = true;
         }
@@ -676,10 +676,8 @@ export async function sendGoogleAuthCookie(err, user, res) {
 }
 
 export function logOut(req, res) {
-    const cookie = serialize("token1", "aaa", {
-        httpOnly: true, secure: true, sameSite: "strict", path: "/", 
-    });
-    res.setHeader('Set-Cookie', cookie);
+    let authCookie = serialize("token", {sky: "blue"}, { httpOnly: true, secure: true, sameSite: "strict", path: "/" });
+    res.setHeader("Set-Cookie", authCookie)
     return res.status(200).json({ status: "success", message: "cookie cleared" })
 }
 

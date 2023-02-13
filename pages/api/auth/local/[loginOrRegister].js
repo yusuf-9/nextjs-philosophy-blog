@@ -18,7 +18,7 @@ export default async function handler(req, res){
         await checkUserAction(req, res)
     }
     else if(loginOrRegister === "logOut"){
-        logOut(req, res)
+        await logOut(req, res)
     }
     else if(loginOrRegister === "resetPassword" && req.method === "POST"){
         await resetPassword(req, res)

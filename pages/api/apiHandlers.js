@@ -678,7 +678,7 @@ export async function sendGoogleAuthCookie(err, user, res) {
 export async function logOut(req, res) {
     let authCookie = serialize("token111", {sky: "blue"}, { httpOnly: true, secure: true, sameSite: "strict", path: "/" });
     res.setHeader("Set-Cookie", authCookie)
-    return res.status(200).json({ status: "success", message: "cookie cleared" })
+    return res.json({ status: "success", message: "cookie cleared" })
 }
 
 // Contact API handler

@@ -50,7 +50,7 @@ function Header({reloader1, triggerReload1}) {
     async function logoutHandler(){
         const response = await axios.get("/api/auth/local/logOut", {withCredentials:true});
         console.log(response)
-        if(response.status === 200){
+        if(response.data.status === "success"){
             triggerReload1()
         }
     }
